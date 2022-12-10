@@ -36,10 +36,24 @@ class _AnimationWidgetState extends State<AnimationWidget>
     );
     // rotation = Tween(begin: 0.0, end: 2.0).animate(controller);
 
+    /// using Curves
+
     rotation = Tween(
       begin: 0.0,
       end: 2 * Math.pi,
-    ).animate(controller); /// full circle
+    ).animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: Curves.bounceOut,
+      ),
+    );
+
+    /// full circle
+
+    // rotation = Tween(
+    //   begin: 0.0,
+    //   end: 2 * Math.pi,
+    // ).animate(controller); /// full circle
 
     controller.addListener(() {
       print('status: ${controller.status}');
@@ -63,7 +77,9 @@ class _AnimationWidgetState extends State<AnimationWidget>
   @override
   Widget build(BuildContext context) {
     // controller.forward();
-    controller.repeat(); /// instead of if, else
+    controller.repeat();
+
+    /// instead of if, else
     return AnimatedBuilder(
         animation: controller,
         builder: (context, child) {
