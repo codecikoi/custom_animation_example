@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as Math;
 
 class AnimationPage extends StatelessWidget {
   const AnimationPage({Key? key}) : super(key: key);
@@ -33,10 +34,23 @@ class _AnimationWidgetState extends State<AnimationWidget>
       vsync: this,
       duration: Duration(milliseconds: 4000),
     );
+    // rotation = Tween(begin: 0.0, end: 2.0).animate(controller);
+
     rotation = Tween(
       begin: 0.0,
-      end: 2.0,
-    ).animate(controller);
+      end: 2 * Math.pi,
+    ).animate(controller); /// full circle
+
+    controller.addListener(() {
+      print('status: ${controller.status}');
+
+      /// instead of if, else we can write controller.repeat();
+      // if (controller.status == AnimationStatus.completed) {
+      //   controller.reverse();
+      // } else if (controller.status == AnimationStatus.dismissed) {
+      //   controller.forward();
+      // }
+    });
     super.initState();
   }
 
@@ -48,8 +62,8 @@ class _AnimationWidgetState extends State<AnimationWidget>
 
   @override
   Widget build(BuildContext context) {
-    controller.forward();
-
+    // controller.forward();
+    controller.repeat(); /// instead of if, else
     return AnimatedBuilder(
         animation: controller,
         builder: (context, child) {
